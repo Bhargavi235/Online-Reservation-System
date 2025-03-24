@@ -1,0 +1,59 @@
+public class OnlineReservationSystem {
+    public static void main(String[] args) {
+        String username = "johndoe";
+        String ticketId = "tkt12345";
+        String destination = "new york";
+
+        System.out.println("User: " + username);
+        System.out.println("Ticket ID: " + ticketId);
+        System.out.println("Destination: " + destination);
+
+        checkTicketStatus(ticketId);
+        generateBookingReference(username, ticketId);
+        displayFormattedTicket(username, destination, ticketId);
+
+        StringBuffer bookingDetails = new StringBuffer("Passenger: ");
+        bookingDetails.append(username);
+        bookingDetails.append(" | Destination: ");
+        bookingDetails.append(destination);
+
+        System.out.println("\nBefore Modification: " + bookingDetails);
+        modifyBooking(bookingDetails, "los angeles");
+        System.out.println("After Modification: " + bookingDetails);
+    }
+
+    public static void checkTicketStatus(String ticketId) {
+        if (ticketId.startsWith("tkt")) {
+            System.out.println("Ticket " + ticketId + " is confirmed.");
+        } else {
+            System.out.println("Invalid ticket ID.");
+        }
+    }
+
+    public static void generateBookingReference(String username, String ticketId) {
+        String reference = username.substring(0, 3).toUpperCase() + ticketId.substring(3);
+        System.out.println("Generated Booking Reference: " + reference);
+    }
+
+    public static void displayFormattedTicket(String username, String destination, String ticketId) {
+        String formattedTicket = "Passenger: " + username.toUpperCase() + " | Destination: " + destination.toUpperCase() + " | Ticket ID: " + ticketId;
+        System.out.println("Formatted Ticket: " + formattedTicket);
+    }
+
+    public static void modifyBooking(StringBuffer bookingDetails, String newDestination) {
+        int start = bookingDetails.indexOf("Destination: ") + 12;
+        bookingDetails.replace(start, bookingDetails.length(), newDestination);
+    }
+
+    public static void cancelBooking(StringBuffer bookingDetails) {
+        bookingDetails.setLength(0);
+        bookingDetails.append("Booking Cancelled");
+        System.out.println("Booking has been cancelled.");
+    }
+
+    public static void addSpecialRequest(StringBuffer bookingDetails, String request) {
+        bookingDetails.append(" | Special Request: ");
+        bookingDetails.append(request);
+        System.out.println("Special request added.");
+    }
+}
