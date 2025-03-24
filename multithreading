@@ -1,0 +1,100 @@
+import java.util.*;
+
+class ReservationSystem {
+    public int availseats = 10;
+
+    public synchronized void book(String name, int reqseats) {
+        if (availseats >= reqseats) {
+            System.out.println(reqseats + " seats have been successfully booked for " + name);
+            availseats -= reqseats;
+        } else {
+            System.out.println("Not enough seats available for " + name);
+        }
+    }
+}
+
+class PassengerRun implements Runnable {
+    public ReservationSystem rsobj;
+    public String name;
+    public int reqseats;
+
+    public PassengerRun(ReservationSystem rsobj, String name, int reqseats) {
+        this.rsobj = rsobj;
+        this.name = name;
+        this.reqseats = reqseats;
+    }
+
+    public void run() {
+        rsobj.book(name, reqseats);
+    }
+}
+
+class PassengerTh extends Thread {
+    public ReservationSystem rsobj;
+    public String name;
+    public int reqseats;
+
+    public PassengerTh(ReservationSystem rsobj, String name, int reqseats) {
+        this.rsobj = rsobj;
+        this.name = name;
+        this.reqseats = reqseats;
+    }
+
+    public void run() {
+        rsobj.book(name, reqseats);
+    }
+}
+
+public class Online {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        ReservationSystem rsobj = new ReservationSystem();
+
+        System.out.println("Enter name");
+        String name1 = sc.next();
+        System.out.println("Enter number of seats required");
+        int seats1 = sc.nextInt();
+
+        System.out.println("Enter name");
+        String name2 = sc.next();
+        System.out.println("Enter number of seats required");
+        int seats2 = sc.nextInt();
+
+        System.out.println("Enter name");
+        String name3 = sc.next();
+        System.out.println("Enter number of seats required");
+        int seats3 = sc.nextInt();
+
+        System.out.println("Enter name");
+        String name4 = sc.next();
+        System.out.println("Enter number of seats required");
+        int seats4 = sc.nextInt();
+
+        Thread p1 = new Thread(new PassengerRun(rsobj, name1, seats1));
+        Thread p2 = new Thread(new PassengerRun(rsobj, name2, seats2));
+
+        PassengerTh p3 = new PassengerTh(rsobj, name3, seats3);
+        PassengerTh p4 = new PassengerTh(rsobj, name4, seats4);
+
+        p3.setPriority(3);
+        p2.setPriority(10);
+        p1.setPriority(5);
+        p4.setPriority(1);
+
+        p1.start();
+        p2.start();
+        p3.start();
+        p4.start();
+
+        try {
+            p1.join();
+            p2.join();
+            p3.join();
+            p4.join();
+        } catch (InterruptedException e) {
+            System.out.println("Thread interrupted: " + e.getMessage());
+        }
+
+        System.out.println("All reservations have been processed.");
+    }
+}
