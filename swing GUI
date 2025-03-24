@@ -1,0 +1,60 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+
+public class SimpleReservation {
+    private JFrame frame;
+    private JTextField nameField;
+    private JTextArea reservationList;
+    private ArrayList<String> reservations;
+
+    public SimpleReservation() {
+        reservations = new ArrayList<>();
+
+        frame = new JFrame("Reservation System");
+        frame.setSize(300, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new FlowLayout());
+
+        nameField = new JTextField(15);
+        JButton bookButton = new JButton("Book");
+        JButton cancelButton = new JButton("Cancel");
+
+        reservationList = new JTextArea(10, 20);
+        reservationList.setEditable(false);
+
+        frame.add(new JLabel("Enter Name:"));
+        frame.add(nameField);
+        frame.add(bookButton);
+        frame.add(cancelButton);
+        frame.add(new JScrollPane(reservationList));
+
+        bookButton.addActionListener(e -> {
+            String name = nameField.getText().trim();
+            if (!name.isEmpty() && !reservations.contains(name)) {
+                reservations.add(name);
+                updateList();
+                JOptionPane.showMessageDialog(frame, "Booked Successfully!");
+            }
+        });
+
+        cancelButton.addActionListener(e -> {
+            String name = nameField.getText().trim();
+            if (reservations.remove(name)) {
+                updateList();
+                JOptionPane.showMessageDialog(frame, "Cancelled Successfully!");
+            }
+        });
+
+        frame.setVisible(true);
+    }
+
+    private void updateList() {
+        reservationList.setText("Reservations:\n" + String.join("\n", reservations));
+    }
+
+    public static void main(String[] args) {
+        new SimpleReservation();
+    }
+}
