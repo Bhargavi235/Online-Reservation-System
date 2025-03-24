@@ -1,0 +1,58 @@
+import java.util.*;
+class reservation {
+private int reservID;
+private String name;
+private String service;
+private double price;
+public reservation(int reservID, String name, String service, double price)
+{
+this.reservID=reservID;
+this.name=name;
+this.service=service;
+this.price=price;
+}
+public reservation(int reservID, String name, String service)
+{
+this(reservID, name, service, 0.0);
+}
+public reservation(int reservID, String name)
+{
+this(reservID, name, &quot;General&quot;, 0.0);
+}
+public void display()
+{
+System.out.println(&quot;Reservation ID: &quot;+reservID);
+System.out.println(&quot;Customer: &quot;+name);
+System.out.println(&quot;Service: &quot;+service);
+System.out.println(&quot;Price: &quot;+price);
+}
+public void display(Boolean includeprice)
+{
+System.out.println(&quot;Reservation ID: &quot;+reservID);
+
+System.out.println(&quot;Customer: &quot;+name);
+System.out.println(&quot;Service: &quot;+service);
+if(includeprice)
+{
+System.out.println(&quot;Price: &quot;+price);
+}
+}
+}
+
+class Main{
+public static void main(String args[])
+{
+Scanner obj=new Scanner(System.in);
+reservation[] r=new reservation[3];
+r[0]=new reservation(101,&quot;Scully&quot;,&quot;Flight&quot;,6000.0);
+r[1]=new reservation(102,&quot;Jake&quot;,&quot;Hotel&quot;);
+r[2]=new reservation(103,&quot;Gina&quot;);
+System.out.println(&quot;Welcome to online reservation system:&quot;);
+for(int i=0;i&lt;r.length;i++)
+{
+System.out.println(&quot;Reservation details: &quot;);
+r[i].display(true);
+System.out.println();
+}
+}
+}
