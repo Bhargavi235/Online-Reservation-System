@@ -1,0 +1,55 @@
+import java.util.*;
+class Reservation
+{
+private int reservID;
+private String name;
+private String date;
+protected String status;
+public void setReservation(int id, String n, String d)
+{
+reservID = id;
+name = n;
+date = d;
+status=&quot;Active&quot;;
+}
+public void display()
+{
+System.out.println(&quot;Reservation ID: &quot; + reservID);
+System.out.println(&quot;Name: &quot; + name);
+System.out.println(&quot;Date: &quot; + date);
+System.out.println(&quot;Status: &quot;+ status);
+}
+public void cancelReservation()
+{
+status = &quot;Cancelled&quot;;
+System.out.println(&quot;Reservation has been cancelled&quot;);
+}
+}
+class Main
+{
+public static void main(String[] args)
+{
+Scanner obj = new Scanner(System.in);
+System.out.println(&quot;Welcome to Online Reservation System!&quot;);
+System.out.println(&quot;Enter Reservation ID:&quot;);
+
+int reservID = obj.nextInt();
+System.out.println(&quot;Enter Name:&quot;);
+String name = obj.next();
+System.out.println(&quot;Enter Date for Reservation (DD-MM-YYYY):&quot;);
+String date = obj.next();
+Reservation res = new Reservation();
+res.setReservation(reservID, name, date);
+System.out.println(&quot;\nInitial Reservation Details:&quot;);
+res.display();
+System.out.println(&quot;\nDo you want to cancel the reservation? (yes/no)&quot;);
+String cancelChoice = obj.next();
+if (cancelChoice.equalsIgnoreCase(&quot;yes&quot;))
+{
+res.cancelReservation();
+}
+System.out.println(&quot;\nFinal Reservation Details:&quot;);
+res.display();
+obj.close();
+}
+}
