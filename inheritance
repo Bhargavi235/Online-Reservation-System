@@ -1,0 +1,117 @@
+import java.util.*;
+abstract class Reservation
+{
+int reservID;
+String name;
+String date;
+public Reservation(int reservID, String name, String date)
+{
+this.reservID = reservID;
+this.name = name;
+this.date = date;
+}
+abstract void book();
+}
+class Hotel extends Reservation
+{
+String type;
+int ppl;
+public Hotel(int reservID, String name, String date, String type, int ppl)
+{
+super(reservID, name, date);
+this.type = type;
+this.ppl = ppl;
+}
+void book()
+{
+System.out.println(&quot;Hotel reservation for &quot; + type + &quot; room for &quot; + ppl + &quot;
+people.&quot;);
+}
+}
+class Bus extends Reservation
+{
+String place;
+int no;
+
+public Bus(int reservID, String name, String date, String place, int no)
+{
+super(reservID, name, date);
+this.place = place;
+this.no = no;
+}
+void book()
+{
+System.out.println(&quot;Bus tickets have been booked for &quot; + place + &quot; on &quot; +
+date);
+System.out.println(&quot;Number of tickets: &quot; + no);
+}
+}
+class Main
+{
+public static void main(String[] args)
+{
+Scanner sc = new Scanner(System.in);
+int reservID = 0;
+String name;
+String date;
+String place = &quot;&quot;;
+int no = 0;
+String type = &quot;&quot;;
+int ppl = 0;
+System.out.println(&quot;Welcome to online reservation system&quot;);
+System.out.println(&quot;Enter reservation ID&quot;);
+while (true)
+{
+if (sc.hasNextInt())
+{
+reservID = sc.nextInt();
+break;
+}
+
+else
+{
+System.out.println(&quot;Reservation ID must be an integer&quot;);
+sc.next();
+}
+}
+System.out.println(&quot;Enter name &quot;);
+while (true)
+{
+name = sc.next();
+if (!name.isEmpty() &amp;&amp; name.matches(&quot;[a-zA-Z]+&quot;))
+{
+break;
+}
+else
+{
+System.out.println(&quot;Name must be a String&quot;);
+}
+}
+System.out.println(&quot;Enter date of trip &quot;);
+date = sc.next();
+System.out.println(&quot;Choose reservation type:\n1. Bus\n2. Hotel&quot;);
+int choice = sc.nextInt();
+switch (choice)
+{
+case 1:
+System.out.println(&quot;Enter place for bus reservation&quot;);
+place = sc.next();
+System.out.println(&quot;Enter number of tickets&quot;);
+no = sc.nextInt();
+Bus bus = new Bus(reservID, name, date, place, no);
+bus.book();
+break;
+case 2:
+
+System.out.println(&quot;Enter room type for hotel(AC or NonAC&quot;);
+type = sc.next();
+System.out.println(&quot;Enter number of people&quot;);
+ppl = sc.nextInt();
+Hotel hotel = new Hotel(reservID, name, date, type, ppl);
+hotel.book();
+break;
+default:
+System.out.println(&quot;Invalid choice&quot;);
+}
+}
+}
