@@ -1,0 +1,42 @@
+import reservation.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Online Reservation System");
+        System.out.println("1. Train Reservation");
+        System.out.println("2. Flight Reservation");
+        System.out.print("Choose an option: ");
+        int choice = scanner.nextInt();
+
+        Reservable system;
+
+        if (choice == 1) {
+            system = new TrainReservation();
+        } else {
+            system = new FlightReservation();
+        }
+
+        while (true) {
+            System.out.println("\n1. Book Ticket\n2. Cancel Ticket\n3. Check Availability\n4. Exit");
+            System.out.print("Enter choice: ");
+            int option = scanner.nextInt();
+
+            if (option == 1) {
+                system.bookTicket();
+            } else if (option == 2) {
+                system.cancelTicket();
+            } else if (option == 3) {
+                system.checkAvailability();
+            } else if (option == 4) {
+                System.out.println("Exiting Reservation System...");
+                scanner.close();
+                return;
+            } else {
+                System.out.println("Invalid option! Try again.");
+            }
+        }
+    }
+}
