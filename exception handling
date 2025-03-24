@@ -1,0 +1,81 @@
+import java.util.*;
+
+class ReservationException extends Exception
+{
+  public ReservationException(String message)
+  {
+      super(message);
+  }
+}
+class reservation
+{
+    public int availseats=10;
+    public double ticketprice=250.00;
+    
+    public void process(double amt) throws ReservationException
+    {
+        if(amt<ticketprice)
+        {
+            throw new ReservationException("Insufficient amount, payment failed.\nTicket price is "+ticketprice);
+        }
+        System.out.println("Payment successful!");
+    }
+    
+    public void bookticket(int seats) throws ReservationException
+    {
+        if(seats>availseats)
+        {
+            throw new ReservationException("Seats unavailable");
+        }
+        availseats-=seats;
+        System.out.println(seats+ " seats booked");
+    }
+}
+
+public class Main
+{
+    public static void main(String args[])
+    {
+        Scanner scobj=new Scanner(System.in);
+        reservation robj=new reservation();
+        
+        while(true)
+        {
+        System.out.println("Confirm seat and pay portal\n1. Book seats\n2. Make the payment\n3. Exit\nEnter choice");
+        int choice=scobj.nextInt();
+        
+        
+        switch(choice)
+        {
+            case 1:try
+        {
+            System.out.println("Enter number of seats to book\n");
+            int seats=scobj.nextInt();
+            robj.bookticket(seats);
+        }
+         catch(ReservationException e)
+        {
+            System.out.println("Error: "+e.getMessage());
+        }
+        break;
+        
+        case 2: try
+        {
+            System.out.println("Enter amount to pay\n");
+            double amt=scobj.nextDouble();
+            robj.process(amt);
+        }
+        
+        catch(ReservationException e)
+        {
+            System.out.println("Error: "+e.getMessage());
+        }
+        break;
+        
+        case 3:
+            System.out.println("Thank you! Exiting");
+            System.exit(0);
+        }
+        }
+    }
+}
