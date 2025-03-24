@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Reservation</title>
+</head>
+<body>
+    <h2>Online Reservation System</h2>
+    <form action="reservation.jsp" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="seat">Select Seat:</label>
+        <select id="seat" name="seat">
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="B1">B1</option>
+            <option value="B2">B2</option>
+        </select><br><br>
+
+        <input type="submit" value="Reserve Now">
+    </form>
+</body>
+</html>
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Confirmation</title>
+</head>
+<body>
+    <h2>Reservation Confirmation</h2>
+
+    <% 
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String seat = request.getParameter("seat");
+
+        if(name != null && email != null && seat != null) {
+    %>
+        <p>Thank you, <b><%= name %></b>! Your seat <b><%= seat %></b> has been reserved successfully.</p>
+        <p>A confirmation has been sent to: <b><%= email %></b></p>
+    <% 
+        } else { 
+    %>
+        <p>Reservation failed. Please try again.</p>
+    <% 
+        } 
+    %>
+
+</body>
+</html>
