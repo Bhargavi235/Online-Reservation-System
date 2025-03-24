@@ -1,0 +1,77 @@
+import java.sql.*;
+import java.util.*;
+
+class Reserve
+{
+    public static void main(String args[])
+    {
+        Scanner sc=new Scanner(System.in);
+        
+        try
+        {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/reservation_db", "root", "tiger");
+            Statement st=con.createStatement();
+            
+            while(true)
+            {
+                System.out.println("Online Reservation System:\n1. Add reservation\n2. View bookings\n3. Update\n4. Delete booking");
+                System.out.println("5.Exit\nChoose an option\n");
+                int choice=sc.nextInt();
+                
+                switch(choice)
+                {
+                    System.out.println("Enter passenger name");
+                    String name=sc.next();
+                    System.out.println("Enter train number");
+                    int train=sc.nextInt();
+                String sqlInsert="INSERT INTO reservations (passenger_name, train_number) VALUES ('" +name+ "',"+train+")";
+                st.executeUpdate(sqlInsert);
+                System.out.println("Reservation successful");
+                break;
+                
+                case 2:
+                        ResultSet rs = st.executeQuery("SELECT * FROM reservations");
+                        System.out.println("Reservation List");
+                        while (rs.next()) {
+                            System.out.println(rs.getInt(1) + " | " + rs.getString(2) + " | Train " + rs.getInt(3));
+                        }
+                        break;
+
+                    case 3:
+                        System.out.println("Enter Reservation ID to Update ");
+                        int updateId = sc.nextInt();
+                        System.out.println("Enter New Passenger Name");
+                        String newName = sc.nextLine();
+                        String sqlUpdate = "UPDATE reservations SET passenger_name='" + newName + "' WHERE id=" + updateId;
+                        st.executeUpdate(sqlUpdate);
+                        System.out.println(" Reservation updated");
+                        break;
+
+                    case 4:
+                        System.out.println("Enter Reservation ID to Delete");
+                        int deleteId = sc.nextInt();
+                        String sqlDelete = "DELETE FROM reservations WHERE id=" + deleteId;
+                        st.executeUpdate(sqlDelete);
+                        System.out.println(" Reservation deleted");
+                        break;
+
+                    case 5:
+                        System.out.println("Exiting");
+                        return;
+
+                    default:
+                        System.out.println("invalid choice");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+}
+                }
+                
+            }
+        }
+    }
+}
