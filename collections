@@ -1,0 +1,80 @@
+import java.util.*;
+
+public class OnlineReservationSystem 
+{
+    private ArrayList<String> reservationNames = new ArrayList<>();
+    private HashMap<String, String> reservations = new HashMap<>();
+
+    public void book(String name, String details) 
+{
+        if (reservations.containsKey(name)) 
+	{
+            System.out.println("Error: A ticket has already been booked by " + name);
+            return;
+        }
+        reservationNames.add(name); 
+        reservations.put(name, details); 
+        System.out.println("Ticket booked for " + name + " (" + details + ")");
+    }
+
+    public void cancel(String name) 
+{
+        if (reservations.containsKey(name)) 
+	{
+            reservations.remove(name);
+            reservationNames.remove(name); 
+            System.out.println("Ticket cancelled for " + name);
+        } else 
+	{
+            System.out.println("No reservation found for " + name);
+        }
+    }
+
+    public void display() 
+{
+        System.out.println("Current reservations:");
+        for (String name : reservationNames) 
+	{ 
+            System.out.println(name + " - " + reservations.get(name));
+        }
+    }
+
+    public static void main(String[] args) 
+{
+        Scanner scanner = new Scanner(System.in);
+        OnlineReservationSystem system = new OnlineReservationSystem();
+
+        while (true) 
+	{
+            System.out.println("\n1. Book ticket\n2. Cancel ticket\n3. View reservations\n4. Exit");
+            System.out.println("Enter choice:");
+            int choice = scanner.nextInt();
+      
+
+            switch (choice) 
+	{
+                case 1:
+                    System.out.println("Enter your name:");
+                    String name = scanner.next();
+                    System.out.println("Enter travel type (Flight/Train) and number of seats");
+                    String details = scanner.next();
+                    system.book(name, details);
+                    break;
+                case 2:
+                    System.out.println("Enter name to cancel:");
+                    String cancelName = scanner.next();
+                    system.cancel(cancelName);
+                    break;
+                case 3:
+                    system.display();
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                  
+                    return;
+                default:
+                    System.out.println("Invalid choice");
+            }
+        }
+    }
+}
